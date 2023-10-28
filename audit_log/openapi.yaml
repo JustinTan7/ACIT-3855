@@ -1,0 +1,143 @@
+openapi: 3.0.0
+info:
+  description: This API provides Bullet and Ability Efficiency
+  version: "1.0.0"
+  title: Valorant Efficiency API
+  contact:
+    email: justin.taan@gmail.com
+paths:
+  /bullet-efficiency:
+    get:
+      summary: gets a bullet efficiency reading from history
+      operationId: app.get_bullet_efficiency_stats
+      description: Gets bullet efficiency stats from the event store
+      parameters:
+        - name: index
+          in: query
+          description: Gets the BE at the index in the event store
+          schema:
+            type: integer
+            example: 100
+      responses:
+        '200':
+          description: Successfully returned a bullet efficiency event
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/BulletEfficiencyReading'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+  /ability-efficiency:
+    get:
+      summary: gets an ability efficiency reading from history
+      operationId: app.get_ability_efficiency_stats
+      description: Gets ability efficiency stats from the event store
+      parameters:
+        - name: index
+          in: query
+          description: Gets the AE at the index in the event store
+          schema:
+            type: integer
+            example: 100
+      responses:
+        '200':
+          description: Successfully returned an ability efficiency event
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/AbilityEfficiencyReading'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+components:
+  schemas:
+    BulletEfficiencyReading:
+      required:
+      - player_id
+      - gun_id
+      - round_start_magazine_count
+      - round_end_magazine_count
+      - gun_cost
+      - trace_id
+      properties:
+        player_id:
+          type: string
+          example: MonkeyMan
+        gun_id:
+          type: string
+          example: G_012
+        round_start_magazine_count:
+          type: integer
+          example: 75
+        round_end_magazine_count:
+          type: integer
+          example: 30
+        gun_cost:
+          type: integer
+          example: 2900
+        trace_id:
+          type: string
+          format: uuid
+          example: e7c1b32d-12d0-4dd4-b513-a4b5445f6bc6
+      type: object
+    AbilityEfficiencyReading:
+      required:
+      - player_id
+      - agent_id
+      - round_start_ability_count
+      - round_end_ability_count
+      - ability_cost
+      - trace_id
+      properties:
+        player_id:
+          type: string
+          example: Borat
+        agent_id:
+          type: string
+          example: Viper
+        round_start_ability_count:
+          type: integer
+          example: 4
+        round_end_ability_count:
+          type: integer
+          example: 0
+        trace_id:
+          type: string
+          format: uuid
+          example: 4732cc8d-1dd7-4857-b9ff-66d49f0a5c2e
+      type: object

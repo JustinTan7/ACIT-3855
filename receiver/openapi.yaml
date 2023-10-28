@@ -1,0 +1,99 @@
+---
+openapi: 3.0.0
+info:
+  title: Valorant Efficiency API
+  description: This API receives bullet efficiency and ability efficiency data from players
+  contact:
+    email: justin.taan@gmail.com
+  version: "1.0"
+tags:
+- name: efficiency
+  description: Endpoints dealing with efficiency
+paths:
+  /bullet-efficiency:
+    post:
+      tags:
+      - efficiency
+      summary: reports data about bullet efficiency
+      description: Adds a new bullet efficiency rating to the system for a player
+      operationId: app.report_bullet_efficiency
+      requestBody:
+        description: Reading item to add
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulletEfficiency'
+      responses:
+        "201":
+          description: item created
+        "400":
+          description: "invalid input, object invalid"
+  /ability-efficiency:
+    post:
+      tags:
+      - efficiency
+      summary: reports data about ability efficiency
+      description: Adds a new ability efficiency rating to the system for a player
+      operationId: app.report_ability_efficiency
+      requestBody:
+        description: Reading item to add
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AbilityEfficiency'
+      responses:
+        "201":
+          description: item created
+        "400":
+          description: "invalid input, object invalid"
+components:
+  schemas:
+    BulletEfficiency:
+      required:
+      - player_id
+      - gun_id
+      - round_start_magazine_count
+      - round_end_magazine_count
+      - gun_cost
+      type: object
+      properties:
+        player_id:
+          type: string
+          example: monkey
+        gun_id:
+          type: string
+          example: Vandal
+        round_start_magazine_count:
+          type: integer
+          example: 75
+        round_end_magazine_count:
+          type: integer
+          example: 45
+        gun_cost:
+          type: integer
+          example: 4700
+
+    AbilityEfficiency:
+      required:
+      - player_id
+      - agent_id
+      - round_start_ability_count
+      - round_end_ability_count
+      - ability_cost
+      type: object
+      properties:
+        player_id:
+          type: string
+          example: tyler1
+        agent_id:
+          type: string
+          example: Sage
+        round_start_ability_count:
+          type: integer
+          example: 5
+        round_end_ability_count:
+          type: integer
+          example: 0
+        ability_cost:
+          type: integer
+          example: 1200

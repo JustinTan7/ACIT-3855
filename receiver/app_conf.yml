@@ -1,0 +1,9 @@
+version: 1
+bullet-efficiency:
+  url: http://localhost:8090/bullet-efficiency
+ability-efficiency:
+  url: http://localhost:8090/ability-efficiency
+events:
+  hostname: sbajustin.eastus.cloudapp.azure.com
+  port: 9092
+  topic: events

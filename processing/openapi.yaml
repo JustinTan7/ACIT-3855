@@ -1,0 +1,80 @@
+openapi: 3.0.0
+info:
+  description: This API provides event stats
+  version: "1.0.0"
+  title: Valorant Efficiency Stats API
+  contact:
+    email: justin.taan@gmail.com
+paths:
+  /stats:
+    get:
+      summary: Gets the event stats
+      operationId: app.get_stats
+      description: Gets bullet efficiency and ability efficiency processed statistics
+      responses:
+        '200':
+          description: Successfully returned a list of efficiency events
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/ReadingStats'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+components:
+  schemas:
+    ReadingStats:
+      required:
+      - total_bullet_efficiency_readings
+      - highest_gun_cost
+      - lowest_gun_cost
+      - highest_round_end_magazine_count
+      - lowest_round_end_magazine_count
+      - total_ability_efficiency_readings
+      - highest_ability_cost
+      - lowest_ability_cost
+      - highest_round_end_ability_count
+      - lowest_round_end_ability_count
+      - total_readings
+      properties:
+        total_bullet_efficiency_readings:
+          type: integer
+          example: 50000
+        highest_gun_cost:
+          type: integer
+          example: 4700
+        lowest_gun_cost:
+          type: integer
+          example: 0
+        highest_round_end_magazine_count:
+          type: integer
+          example: 75
+        lowest_round_end_magazine_count:
+          type: integer
+          example: 0
+        total_ability_efficiency_readings:
+          type: integer
+          example: 60000
+        highest_ability_cost:
+          type: integer
+          example: 1200
+        lowest_ability_cost:
+          type: integer
+          example: 0
+        highest_round_end_ability_count:
+          type: integer
+          example: 4
+        lowest_round_end_ability_count:
+          type: integer
+          example: 0
+        total_readings:
+          type: integer
+          example: 100000
