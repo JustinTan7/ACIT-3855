@@ -44,6 +44,7 @@ components:
       - highest_round_end_ability_count
       - lowest_round_end_ability_count
       - total_readings
+      - last_updated
       properties:
         total_bullet_efficiency_readings:
           type: integer
