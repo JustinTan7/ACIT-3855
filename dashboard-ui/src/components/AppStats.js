@@ -8,7 +8,7 @@ export default function AppStats() {
 
 	const getStats = () => {
 	
-        fetch(`http://<Cloud DNS>:8100/stats`)
+        fetch(`http://sbajustin.eastus.cloudapp.azure.com:8100/stats`)
             .then(res => res.json())
             .then((result)=>{
 				console.log("Received Stats")
@@ -35,21 +35,37 @@ export default function AppStats() {
                 <table className={"StatsTable"}>
 					<tbody>
 						<tr>
-							<th>Blood Pressure</th>
-							<th>Heart Rate</th>
+							<th>Bullet Efficiency</th>
+							<th>Ability Efficiency</th>
 						</tr>
 						<tr>
-							<td># BP: {stats['num_bp_readings']}</td>
-							<td># HR: {stats['num_hr_readings']}</td>
+							<td># BE: {stats['total_bullet_efficiency_readings']}</td>
+							<td># AE: {stats['total_ability_efficiency_readings']}</td>
+                            <td># TR: {stats['total_readings']}</td>
 						</tr>
 						<tr>
-							<td colspan="2">Max BP Systolic: {stats['max_bp_sys_reading']}</td>
+							<td colspan="2">Highest gun cost: {stats['highest_gun_cost']}</td>
 						</tr>
 						<tr>
-							<td colspan="2">Max BR Diastolic: {stats['max_bp_dia_reading']}</td>
+							<td colspan="2">Lowest gun cost: {stats['lowest_gun_cost']}</td>
 						</tr>
 						<tr>
-							<td colspan="2">Max HR: {stats['max_bp_sys_reading']}</td>
+							<td colspan="2">Highest round end magazine cost: {stats['highest_round_end_magazine_count']}</td>
+						</tr>
+                        <tr>
+							<td colspan="2">Lowest round end magazine cost: {stats['lowest_round_end_magazine_count']}</td>
+						</tr>
+                        <tr>A
+							<td colspan="2">Highest ability cost: {stats['highest_ability_cost']}</td>
+						</tr>
+                        <tr>
+							<td colspan="2">Lowest ability cost: {stats['Lowest gun cost']}</td>
+						</tr>
+                        <tr>
+							<td colspan="2">Highest round end ability count: {stats['highest_round_end_ability_count']}</td>
+						</tr>
+                        <tr>
+							<td colspan="2">Lowest round end ability count: {stats['lowest_round_end_ability_count']}</td>
 						</tr>
 					</tbody>
                 </table>
