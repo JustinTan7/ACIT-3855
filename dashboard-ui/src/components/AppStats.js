@@ -55,7 +55,7 @@ export default function AppStats() {
                         <tr>
 							<td colspan="2">Lowest round end magazine cost: {stats['lowest_round_end_magazine_count']}</td>
 						</tr>
-                        <tr>A
+                        <tr>
 							<td colspan="2">Highest ability cost: {stats['highest_ability_cost']}</td>
 						</tr>
                         <tr>
