@@ -21,6 +21,7 @@ logger = logging.getLogger('basicLogger')
 
 def populate_stats():
     """ Periodically update stats """
+    current_datetime = datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
     logger.info("Start Periodic Processing")
 
     total_bullet_efficiency_readings = 0
@@ -60,8 +61,10 @@ def populate_stats():
         "timestamp": data['last_updated']
     }
 
-    bullet_efficiency_query = requests.get(app_config['eventstore1']['url'], params=param)
-    ability_efficiency_query = requests.get(app_config['eventstore2']['url'], params=param)
+    bullet_efficiency_query = requests.get(app_config["eventstore1"]["url"] + "?start_timestamp=" + data['last_updated']
+ + "&end_timestamp=" + current_datetime)
+    ability_efficiency_query = requests.get(app_config["eventstore2"]["url"] + "?start_timestamp=" + data['last_updated']
+ + "&end_timestamp=" + current_datetime)
 
 
     if bullet_efficiency_query.status_code == 200:
@@ -117,7 +120,6 @@ def populate_stats():
         else:
             logger.info("Did not get a 200 response code")
     
-    current_datetime = datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
 
     data['total_bullet_efficiency_readings'] += total_bullet_efficiency_readings
     data['highest_gun_cost'] = highest_gun_cost

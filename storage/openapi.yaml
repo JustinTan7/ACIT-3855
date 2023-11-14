@@ -35,7 +35,14 @@ paths:
       description: Gets bullet efficiency events added after a timestamp
       operationId: app.get_bullet_efficiency
       parameters:
-        - name: timestamp
+        - name: start_timestamp
+          in: query
+          description: Limits the number of times on a page
+          schema:
+            type: string
+            format: date-time
+            example: 2016-08-29T09:12:33Z
+        - name: end_timestamp
           in: query
           description: Limits the number of times on a page
           schema:
@@ -85,7 +92,14 @@ paths:
       description: Gets ability efficiency events added after a timestamp
       operationId: app.get_ability_efficiency
       parameters:
-        - name: timestamp
+        - name: start_timestamp
+          in: query
+          description: Limits the number of times on a page
+          schema:
+            type: string
+            format: date-time
+            example: 2016-08-29T09:12:33Z
+        - name: end_timestamp
           in: query
           description: Limits the number of times on a page
           schema:

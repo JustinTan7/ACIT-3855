@@ -12,6 +12,8 @@ import json
 from pykafka import KafkaClient
 from pykafka.common import OffsetType
 from threading import Thread
+from sqlalchemy import and_
+import time
 
 
 logger = logging.getLogger('basicLogger')
@@ -83,14 +85,15 @@ def report_ability_efficiency(body):
 
     return NoContent, 201
 
-def get_bullet_efficiency(timestamp):
+def get_bullet_efficiency(start_timestamp, end_timestamp):
     """ Gets new bullet efficiency readings after the timestamp """
 
     session = DB_SESSION()
 
-    timestamp_datetime = datetime.datetime.strptime(timestamp, "%Y-%m-%dT%H:%M:%SZ")
+    start_timestamp_datetime = datetime.datetime.strptime(start_timestamp, "%Y-%m-%dT%H:%M:%SZ", )
+    end_timestamp_datetime = datetime.datetime.strptime(end_timestamp, "%Y-%m-%dT%H:%M:%SZ", )
                                                     
-    readings = session.query(BulletEfficiency).filter(BulletEfficiency.date_created >= timestamp_datetime)
+    readings = session.query(BulletEfficiency).filter(and_(BulletEfficiency.date_created >= start_timestamp_datetime, BulletEfficiency.date_created < end_timestamp_datetime))
 
     results_list = []
 
@@ -100,19 +103,20 @@ def get_bullet_efficiency(timestamp):
     session.close()
 
     logger.info("Query for Bullet Efficiency readings after %s returns %d results" %
-                (timestamp, len(results_list)))
+                (start_timestamp, len(results_list)))
 
     return results_list, 200
 
 
-def get_ability_efficiency(timestamp):
+def get_ability_efficiency(start_timestamp, end_timestamp):
     """ Gets new bullet efficiency readings after the timestamp """
 
     session = DB_SESSION()
 
-    timestamp_datetime = datetime.datetime.strptime(timestamp, "%Y-%m-%dT%H:%M:%SZ")
+    start_timestamp_datetime = datetime.datetime.strptime(start_timestamp, "%Y-%m-%dT%H:%M:%SZ", )
+    end_timestamp_datetime = datetime.datetime.strptime(end_timestamp, "%Y-%m-%dT%H:%M:%SZ", )
                                                     
-    readings = session.query(AbilityEfficiency).filter(AbilityEfficiency.date_created >= timestamp_datetime)
+    readings = session.query(AbilityEfficiency).filter(and_(AbilityEfficiency.date_created >= start_timestamp_datetime, BulletEfficiency.date_created < end_timestamp_datetime))
 
     results_list = []
 
@@ -122,21 +126,31 @@ def get_ability_efficiency(timestamp):
     session.close()
 
     logger.info("Query for Ability Efficiency readings after %s returns %d results" %
-                (timestamp, len(results_list)))
+                (start_timestamp, len(results_list)))
 
     return results_list, 200
 
 def process_messages():
     """ Process event messages """
+    max_retries = (app_config["kafka"]["max_retries"])
+    current_retry = 0
+    retry_sleep_interval = (app_config["kafka"]["retry_sleep_interval"])
     hostname = "%s:%d" % (app_config["events"]["hostname"],
                           app_config["events"]["port"])
-    client = KafkaClient(hosts=hostname)
-    topic = client.topics[str.encode(app_config["events"]["topic"])]
-
+    while current_retry < max_retries:
+        logger.info(f"Connecting to Kafka...\nCurrent retry count: {current_retry}")
+        try:
+            client = KafkaClient(hosts=hostname)
+            topic = client.topics[str.encode(app_config["events"]["topic"])]
+            break
+        except Exception as e:
+            logger.error(f"Connection to Kafka failed {e}.")
+            current_retry += 1
+            time.sleep(retry_sleep_interval)
 
     consumer = topic.get_simple_consumer(consumer_group=b'event_group',
-                                     reset_offset_on_start=False,
-                                     auto_offset_reset=OffsetType.LATEST)
+                                         reset_offset_on_start=False,
+                                         auto_offset_reset=OffsetType.LATEST)
     # This is blocking - it will wait for a new message
     for msg in consumer:
         msg_str = msg.value.decode('utf-8')
