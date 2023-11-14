@@ -52,7 +52,7 @@ def populate_stats():
             "highest_round_end_ability_count": 0,
             "lowest_round_end_ability_count": 0,
             "total_readings": 0,
-            "last_updated": "2023-10-10T09:30:15.448Z"
+            "last_updated": "2023-10-10T09:30:15Z"
         }
         with open(app_config['datastore']['filename'], 'w') as f:
             json.dump(data, f, indent=4)
