@@ -138,10 +138,11 @@ def process_messages():
     hostname = "%s:%d" % (app_config["events"]["hostname"],
                           app_config["events"]["port"])
     while current_retry < max_retries:
-        logger.info(f"Connecting to Kafka...\nCurrent retry count: {current_retry}")
+        logger.info(f"Connecting to Kafka...\nCurrent retry count: {current_retry + 1}")
         try:
             client = KafkaClient(hosts=hostname)
             topic = client.topics[str.encode(app_config["events"]["topic"])]
+            logger.info(f"Successfully connected to Kafka (attempt: {current_retry + 1})")
             break
         except Exception as e:
             logger.error(f"Connection to Kafka failed {e}.")
