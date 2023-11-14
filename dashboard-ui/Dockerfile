@@ -1,4 +1,4 @@
-FROM node:13.12.0-alpine
+FROM node:14.17.6-alpine
 # Set working directory
 WORKDIR /app
 # Add `/app/node_modules/.bin` to $PATH
