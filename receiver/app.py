@@ -27,10 +27,11 @@ retry_sleep_interval = (app_config["kafka"]["retry_sleep_interval"])
 hostname = "%s:%d" % (app_config["events"]["hostname"],
                         app_config["events"]["port"])
 while current_retry < max_retries:
-    logger.info(f"Connecting to Kafka...\nCurrent retry count: {current_retry}")
+    logger.info(f"Connecting to Kafka...\nCurrent retry count: {current_retry + 1}")
     try:
         client = KafkaClient(hosts=hostname)
         topic = client.topics[str.encode(app_config["events"]["topic"])]
+        logger.info(f"Successfully connected to Kafka (attempt: {current_retry + 1})")
         producer = topic.get_sync_producer()
         break
     except Exception as e:
