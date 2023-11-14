@@ -9,4 +9,7 @@ events:
   hostname: sbajustin.eastus.cloudapp.azure.com
   port: 9092
   topic: events
+kafka:
+  max_retries: 5
+  retry_sleep_interval: 10
   

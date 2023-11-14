@@ -13,6 +13,7 @@ from pykafka import KafkaClient
 from pykafka.common import OffsetType
 from threading import Thread
 from sqlalchemy import and_
+import time
 
 
 logger = logging.getLogger('basicLogger')
@@ -131,15 +132,25 @@ def get_ability_efficiency(start_timestamp, end_timestamp):
 
 def process_messages():
     """ Process event messages """
+    max_retries = (app_config["kafka"]["max_retries"])
+    current_retry = 0
+    retry_sleep_interval = (app_config["kafka"]["retry_sleep_interval"])
     hostname = "%s:%d" % (app_config["events"]["hostname"],
                           app_config["events"]["port"])
-    client = KafkaClient(hosts=hostname)
-    topic = client.topics[str.encode(app_config["events"]["topic"])]
-
+    while current_retry < max_retries:
+        logger.info(f"Connecting to Kafka...\nCurrent retry count: {current_retry}")
+        try:
+            client = KafkaClient(hosts=hostname)
+            topic = client.topics[str.encode(app_config["events"]["topic"])]
+            break
+        except Exception as e:
+            logger.error(f"Connection to Kafka failed {e}.")
+            current_retry += 1
+            time.sleep(retry_sleep_interval)
 
     consumer = topic.get_simple_consumer(consumer_group=b'event_group',
-                                     reset_offset_on_start=False,
-                                     auto_offset_reset=OffsetType.LATEST)
+                                         reset_offset_on_start=False,
+                                         auto_offset_reset=OffsetType.LATEST)
     # This is blocking - it will wait for a new message
     for msg in consumer:
         msg_str = msg.value.decode('utf-8')
