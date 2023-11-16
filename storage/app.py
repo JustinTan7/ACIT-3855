@@ -116,7 +116,7 @@ def get_ability_efficiency(start_timestamp, end_timestamp):
     start_timestamp_datetime = datetime.datetime.strptime(start_timestamp, "%Y-%m-%dT%H:%M:%SZ", )
     end_timestamp_datetime = datetime.datetime.strptime(end_timestamp, "%Y-%m-%dT%H:%M:%SZ", )
                                                     
-    readings = session.query(AbilityEfficiency).filter(and_(AbilityEfficiency.date_created >= start_timestamp_datetime, BulletEfficiency.date_created < end_timestamp_datetime))
+    readings = session.query(AbilityEfficiency).filter(and_(AbilityEfficiency.date_created >= start_timestamp_datetime, AbilityEfficiency.date_created < end_timestamp_datetime))
 
     results_list = []
 
