@@ -46,9 +46,7 @@ services:
   receiver:
     image: receiver
     ports:
-      - "8080"
-    networks:
-      - "api.network"
+      - "8080:8080"
     environment:
       - TARGET_ENV=test
     volumes:
@@ -59,9 +57,7 @@ services:
   storage:
     image: storage
     ports:
-      - "8090"
-    networks:
-      - "api.network"
+      - "8090:8090"
     environment:
       - TARGET_ENV=test
     volumes:
@@ -73,9 +69,7 @@ services:
   processing:
     image: processing
     ports:
-      - "8100"
-    networks:
-      - "api.network"
+      - "8100:8100"
     environment:
       - TARGET_ENV=test
     volumes:
@@ -88,9 +82,7 @@ services:
   audit_log:
     image: audit_log
     ports:
-      - "8110"
-    networks:
-      - "api.network"
+      - "8110:8110"
     environment:
       - TARGET_ENV=test
     volumes:
@@ -101,28 +93,10 @@ services:
   dashboard:
     image: dashboard
     ports:
-      - "3000"
-    networks:
-      - "api.network"
+      - "3000:3000"
     depends_on:
       - "processing"
       - "audit_log"
-  nginx:
-    image: nginx:latest
-    volumes:
-      - /home/azureuser/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-    depends_on:
-      - "receiver"
-      - "storage"
-      - "processing"
-      - "audit_log"
-      - "dashboard"
-    ports:
-      - "80:80"
-    networks:
-      - "api.network"
 volumes:
   my-db:
   processing-db:
-networks:
-  api.network:
