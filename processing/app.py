@@ -143,7 +143,7 @@ def populate_stats():
     data['lowest_ability_cost'] = lowest_ability_cost
     data['highest_round_end_ability_count'] = highest_round_end_ability_count
     data['lowest_round_end_ability_count'] = lowest_round_end_ability_count
-    data['total_readings'] = total_bullet_efficiency_readings + total_ability_efficiency_readings
+    data['total_readings'] += total_bullet_efficiency_readings + total_ability_efficiency_readings
     data['last_updated'] = current_datetime
 
     logger.debug(data)
@@ -176,9 +176,11 @@ def get_stats():
     return dict(data), 200
 
 app = connexion.FlaskApp(__name__, specification_dir='')
-CORS(app.app)
-app.app.config['CORS_HEADERS'] = 'Content-Type'
-app.add_api("openapi.yaml", strict_validation=True, validate_responses=True)
+if "TARGET_ENV" not in os.environ or os.environ["TARGET_ENV"] != "test":
+    CORS(app.app)
+    app.app.config['CORS_HEADERS'] = 'Content-Type'
+app.add_api("openapi.yaml", base_path="/processing", strict_validation=True,
+validate_responses=True)
 
 if __name__ == "__main__":
     # run our standalone event server
