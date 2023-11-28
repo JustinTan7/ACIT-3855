@@ -131,8 +131,7 @@ def populate_stats():
             logger.info(f"Amount of ability efficiency data: {len(content_json)}")
         else:
             logger.info("Did not get a 200 response code")
-    
-
+            
     data['total_bullet_efficiency_readings'] += total_bullet_efficiency_readings
     data['highest_gun_cost'] = highest_gun_cost
     data['lowest_gun_cost'] = lowest_gun_cost
