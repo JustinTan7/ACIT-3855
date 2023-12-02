@@ -106,6 +106,12 @@ services:
     depends_on:
       - "processing"
       - "audit_log"
+  health:
+    image: health_check
+    ports:
+      - "8120"
+    networks:
+      - "api.network"
   nginx:
     image: nginx:latest
     volumes:

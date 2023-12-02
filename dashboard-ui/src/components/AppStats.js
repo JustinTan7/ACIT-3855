@@ -40,9 +40,9 @@ export default function AppStats() {
 							<th>Ability Efficiency</th>
 						</tr>
 						<tr>
-							<td># BE: {stats['total_bullet_efficiency_readings']}</td>
-							<td># AE: {stats['total_ability_efficiency_readings']}</td>
-                            <td># TR: {stats['total_readings']}</td>
+							<td># Bullet Efficiency: {stats['total_bullet_efficiency_readings']}</td>
+							<td># Ability Efficiency: {stats['total_ability_efficiency_readings']}</td>
+                            <td># Total Readings: {stats['total_readings']}</td>
 						</tr>
 						<tr>
 							<td colspan="2">Highest gun cost: {stats['highest_gun_cost']}</td>
