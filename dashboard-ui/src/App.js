@@ -3,6 +3,7 @@ import './App.css';
 
 import EndpointAudit from './components/EndpointAudit'
 import AppStats from './components/AppStats'
+import HealthCheck from './components/EndpointHealth'
 
 function App() {
 
@@ -19,6 +20,10 @@ function App() {
                 <AppStats/>
                 <h1>Audit Endpoints</h1>
                 {rendered_endpoints}
+            </div>
+            <div>
+                <HealthCheck/>
+                <h1>Service Status</h1>
             </div>
         </div>
     );
