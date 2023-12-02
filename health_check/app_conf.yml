@@ -1,0 +1,7 @@
+version: 1
+datastore:
+  filename: health_check_data.json
+scheduler:
+  period_sec: 20
+eventstore1:
+  url: http://sbajustin.eastus.cloudapp.azure.com:8120/health

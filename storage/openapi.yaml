@@ -124,6 +124,18 @@ paths:
                 properties:
                   message:
                     type: string
+  /health:
+    get:
+      summary: reports health check
+      description: Returns 200 response code if the app is running
+      operationId: app.health_check
+      response:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              example:
+                message: "App is running smoothly"
 components:
   schemas:
     BulletEfficiency:

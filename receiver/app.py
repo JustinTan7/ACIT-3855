@@ -87,6 +87,8 @@ def report_ability_efficiency(body):
 
     return NoContent, 201
 
+def health_check():
+    return 200
 
 
 app = connexion.FlaskApp(__name__, specification_dir='')
