@@ -48,7 +48,7 @@ def health_check():
     for service in services:
         logger.info(f"Attempting to get health check from {service} service.")
         try:
-            response = requests.get(f'http://sbajustin.eastus.cloudapp.azure.com:{port}/{service}{health_check_endpoint}', timeout=timeout)
+            response = requests.get(f'http://sbajustin.eastus.cloudapp.azure.com/{service}{health_check_endpoint}', timeout=timeout)
             if response.status_code == 200:
                 status_data[service] = 'Running'
             else:
@@ -77,7 +77,7 @@ def health_check_service():
         # Poll the health_check endpoint of each service
         for service in services:
             try:
-                response = requests.get(f'http://sbajustin.eastus.cloudapp.azure.com:{port}/health/{service}')
+                response = requests.get(f'http://sbajustin.eastus.cloudapp.azure.com/{service}/{health_check_endpoint}')
                 logger.info(f"Health check for {service}: {response.status_code}")
             except requests.RequestException as e:
                 logger.error(f"Error during health check for {service}: {str(e)}")
