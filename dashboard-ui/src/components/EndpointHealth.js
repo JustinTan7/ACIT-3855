@@ -16,6 +16,7 @@ const HealthCheck = () => {
                     setError(null);
                 },
                 (error) => {
+                    console.error("Error fetching data", error)
                     setError(error);
                 }
             );
