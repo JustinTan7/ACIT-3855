@@ -64,7 +64,7 @@ def health_check():
 
     # Construct the response in the required format
     response_data = {
-        service.lower(): status
+        service.lower(): status_data[service]
         for service, status in status_data.items() if service != 'last_update'
     }
     response_data['last_update'] = status_data['last_update']
