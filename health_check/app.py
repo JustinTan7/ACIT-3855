@@ -61,6 +61,8 @@ def health_check():
     # Update the last_update timestamp after checking all services
     status_data['last_update'] = datetime.now().strftime('%Y-%m-%dT%H:%M:%S')
 
+    logger.info(f"Returning data: {status_data}")
+
     save_to_json(status_data, "health_check_data.json")
 
     with open(app_config['datastore']['filename'], 'r') as f:
