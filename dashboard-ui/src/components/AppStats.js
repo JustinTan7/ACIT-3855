@@ -38,6 +38,7 @@ export default function AppStats() {
 						<tr>
 							<th>Bullet Efficiency</th>
 							<th>Ability Efficiency</th>
+                            <th>Total Readings</th>
 						</tr>
 						<tr>
 							<td># Bullet Efficiency: {stats['total_bullet_efficiency_readings']}</td>
