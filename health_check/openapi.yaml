@@ -44,7 +44,7 @@ components:
         processing:
           type: string
           example: running
-        last_updated:
-            type: string
-            format: date-time
-            example: '2016-08-29T09:12:33.001Z'
+        # last_updated:
+        #     type: string
+        #     format: date-time
+        #     example: '2016-08-29T09:12:33.001Z'
