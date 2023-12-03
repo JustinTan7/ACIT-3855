@@ -30,17 +30,17 @@ logger = logging.getLogger('basicLogger')
 logger.info("App Conf File: %s" % app_conf_file)
 logger.info("Log Conf File: %s" % log_conf_file)
 
-services = ['Receiver', 'Storage', 'Processing', 'Audit']
+services = ['receiver', 'storage', 'processing', 'audit']
 health_check_endpoint = '/health'
 timeout = 5
 port = 8120
 
 status_data = {
-    'Receiver': 'Unknown',
-    'Storage': 'Unknown',
-    'Processing': 'Unknown',
-    'Audit': 'Unknown',
-    'last_updated': '2016-08-29T09:12:33.001Z'
+    'receiver': '',
+    'storage': '',
+    'processing': '',
+    'audit': '',
+    'last_updated': ''
 }
 
 def health_check():
@@ -49,26 +49,24 @@ def health_check():
         try:
             response = requests.get(f'http://sbajustin.eastus.cloudapp.azure.com/{service}{health_check_endpoint}', timeout=timeout)
             if response.status_code == 200:
+                logger.info(f"{service} is running")
                 status_data[service] = 'Running'
             else:
+                logger.warning(f"{service} is down")
                 status_data[service] = 'Down'
         except requests.RequestException:
             status_data[service] = 'Down'
-        logging.info(f"{service} service status updated: {status_data[service]}")
+        logging.info(f"{service} status updated: {status_data[service]}")
 
     # Update the last_update timestamp after checking all services
     status_data['last_update'] = datetime.now().strftime('%Y-%m-%dT%H:%M:%S')
 
     save_to_json(status_data, "health_check_data.json")
 
-    # Construct the response in the required format
-    response_data = {
-        service.lower(): status_data[service]
-        for service, status in status_data.items() if service != 'last_update'
-    }
-    response_data['last_update'] = status_data['last_update']
-
-    return response_data, 200
+    with open(app_config['datastore']['filename'], 'r') as f:
+        data = json.load(f)
+    logger.info(dict(data))
+    return dict(data), 200
 
 def save_to_json(data, filename):
     with open(filename, 'w') as json_file:
