@@ -43,7 +43,7 @@ const HealthCheck = () => {
                     <p>Processing: {healthStatus.processing}</p>
                     <p>Receiver: {healthStatus.receiver}</p>
                     <p>Storage: {healthStatus.storage}</p>
-                    <p>Last Updated: {healthStatus.last_update}</p>
+                    <p>Last Updated: {healthStatus.last_updated}</p>
                 </div>
             )}
         </div>
