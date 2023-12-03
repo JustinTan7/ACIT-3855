@@ -110,13 +110,13 @@ services:
     image: health_check
     ports:
       - "8120"
+    networks:
+      - "api.network"
     environment:
       - TARGET_ENV=test
     volumes:
       - /home/azureuser/config/health_check:/config
       - /home/azureuser/logs:/logs
-    networks:
-      - "api.network"
   nginx:
     image: nginx:latest
     volumes:
