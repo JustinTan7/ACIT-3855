@@ -7,7 +7,7 @@ const HealthCheck = () => {
     const [error, setError] = useState(null);
 
     const getHealth = () => {
-        fetch('http://sbajustin.eastus.cloudapp.azure.com/health')
+        fetch('http://sbajustin.eastus.cloudapp.azure.com/health/health')
             .then(res => res.json())
             .then(
                 (result) => {
