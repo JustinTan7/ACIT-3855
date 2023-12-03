@@ -32,7 +32,6 @@ logger.info("Log Conf File: %s" % log_conf_file)
 
 services = ['Receiver', 'Storage', 'Processing', 'Audit']
 health_check_endpoint = '/health'
-poll_interval = 20
 timeout = 5
 port = 8120
 
@@ -70,19 +69,6 @@ def health_check():
     response_data['last_update'] = status_data['last_update']
 
     return response_data, 200
-
-
-# def health_check_service():
-#     while True:
-#         # Poll the health_check endpoint of each service
-#         for service in services:
-#             try:
-#                 response = requests.get(f'http://sbajustin.eastus.cloudapp.azure.com/{service}/{health_check_endpoint}')
-#                 logger.info(f"Health check for {service}: {response.status_code}")
-#             except requests.RequestException as e:
-#                 logger.error(f"Error during health check for {service}: {str(e)}")
-
-#         time.sleep(poll_interval)
 
 def save_to_json(data, filename):
     with open(filename, 'w') as json_file:
