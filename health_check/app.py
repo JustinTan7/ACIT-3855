@@ -41,7 +41,7 @@ status_data = {
     'Storage': 'Unknown',
     'Processing': 'Unknown',
     'Audit': 'Unknown',
-    'last_update': None
+    'Last updated': None
 }
 
 def health_check():

@@ -8,6 +8,8 @@ info:
 paths:
   /health:
     get:
+      tags:
+        - health check
       summary: reports health check
       description: Returns 200 response code if the app is running
       operationId: app.health_check
@@ -16,5 +18,33 @@ paths:
           description: Successful response
           content:
             application/json:
-              example:
-                message: "App is running smoothly"
+              schema:
+                $ref: '#/components/schemas/health_check'
+  
+components:
+  schemas:
+    health_check:
+      type: object
+      required:
+        - receiver
+        - storage
+        - audit
+        - processing
+        - last_updated
+      properties:
+        receiver:
+          type: string
+          example: running
+        storage:
+          type: string
+          example: running
+        audit:
+          type: string
+          example: running
+        processing:
+          type: string
+          example: running
+        last_updated:
+            type: string
+            format: date-time
+            example: '2016-08-29T09:12:33.001Z'
