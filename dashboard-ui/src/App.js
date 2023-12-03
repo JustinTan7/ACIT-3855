@@ -22,8 +22,8 @@ function App() {
                 {rendered_endpoints}
             </div>
             <div>
-                <HealthCheck/>
                 <h1>Service Status</h1>
+                <HealthCheck/>
             </div>
         </div>
     );
