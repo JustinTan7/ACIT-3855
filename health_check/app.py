@@ -39,8 +39,7 @@ status_data = {
     'receiver': '',
     'storage': '',
     'processing': '',
-    'audit': '',
-    'last_updated': ''
+    'audit': ''
 }
 
 def health_check():
