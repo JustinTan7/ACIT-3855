@@ -1,6 +1,7 @@
 openapi: 3.0.0
 info:
   description: This API provides health checks
+  version: "1.0.0"
   title: Valorant Efficiency Health Check API
   contact:
     email: justin.taan@gmail.com
