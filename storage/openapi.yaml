@@ -132,7 +132,8 @@ paths:
       responses:
         '200':
           description: Service is running
-
+          
+components:
   schemas:
     BulletEfficiency:
       required:
