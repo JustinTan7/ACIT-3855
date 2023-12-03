@@ -40,6 +40,7 @@ status_data = {
     'Storage': 'Unknown',
     'Processing': 'Unknown',
     'Audit': 'Unknown',
+    'last_updated': ""
 }
 
 def health_check():
@@ -56,16 +57,16 @@ def health_check():
         logger.info(f"{service} service status updated: {status_data[service]}")
 
     # Update the last_update timestamp after checking all services
-    status_data['last_update'] = datetime.now().strftime('%Y-%m-%dT%H:%M:%S')
+    status_data['last_updated'] = datetime.now().strftime('%Y-%m-%dT%H:%M:%S')
 
     save_to_json(status_data, "health_check_data.json")
 
     # Construct the response in the required format
     response_data = {
         service.lower(): status_data[service]
-        for service, status in status_data.items() if service != 'last_update'
+        for service, status in status_data.items() if service != 'last_updated'
     }
-    response_data['last_update'] = status_data['last_update']
+    response_data['last_updated'] = status_data['last_updated']
 
     logger.info(f"Returning data: {response_data}")
 
