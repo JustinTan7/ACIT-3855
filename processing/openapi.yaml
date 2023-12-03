@@ -34,14 +34,10 @@ paths:
       summary: reports health check
       description: Returns 200 response code if the app is running
       operationId: app.health_check
-      response:
+      responses:
         '200':
-          description: Successful response
-          content:
-            application/json:
-              example:
-                message: "App is running smoothly"
-components:
+          description: Service is running
+
   schemas:
     ReadingStats:
       required:

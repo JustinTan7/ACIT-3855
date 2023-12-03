@@ -131,12 +131,8 @@ paths:
       operationId: app.health_check
       response:
         '200':
-          description: Successful response
-          content:
-            application/json:
-              example:
-                message: "App is running smoothly"
-components:
+          description: Service is running
+
   schemas:
     BulletEfficiency:
       required:
