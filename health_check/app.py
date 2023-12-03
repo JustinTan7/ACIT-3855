@@ -53,7 +53,7 @@ def health_check():
                 status_data[service] = 'Down'
         except requests.RequestException:
             status_data[service] = 'Down'
-        logging.info(f"{service} service status updated: {status_data[service]}")
+        logger.info(f"{service} service status updated: {status_data[service]}")
 
     # Update the last_update timestamp after checking all services
     status_data['last_update'] = datetime.now().strftime('%Y-%m-%dT%H:%M:%S')
@@ -66,6 +66,8 @@ def health_check():
         for service, status in status_data.items() if service != 'last_update'
     }
     response_data['last_update'] = status_data['last_update']
+
+    logger.info(f"Returning data: {response_data}")
 
     return response_data, 200
 
