@@ -72,17 +72,17 @@ def health_check():
     return response_data, 200
 
 
-def health_check_service():
-    while True:
-        # Poll the health_check endpoint of each service
-        for service in services:
-            try:
-                response = requests.get(f'http://sbajustin.eastus.cloudapp.azure.com/{service}/{health_check_endpoint}')
-                logger.info(f"Health check for {service}: {response.status_code}")
-            except requests.RequestException as e:
-                logger.error(f"Error during health check for {service}: {str(e)}")
+# def health_check_service():
+#     while True:
+#         # Poll the health_check endpoint of each service
+#         for service in services:
+#             try:
+#                 response = requests.get(f'http://sbajustin.eastus.cloudapp.azure.com/{service}/{health_check_endpoint}')
+#                 logger.info(f"Health check for {service}: {response.status_code}")
+#             except requests.RequestException as e:
+#                 logger.error(f"Error during health check for {service}: {str(e)}")
 
-        time.sleep(poll_interval)
+#         time.sleep(poll_interval)
 
 def save_to_json(data, filename):
     with open(filename, 'w') as json_file:
