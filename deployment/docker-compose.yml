@@ -44,7 +44,7 @@ services:
     volumes:
       - my-db:/var/lib/mysql
   receiver:
-    image: churu/receiver:latest
+    image: churu/receiver
     ports:
       - "8080"
     networks:
@@ -57,7 +57,7 @@ services:
     depends_on:
       - kafka
   storage:
-    image: churu/storage:latest
+    image: churu/storage
     ports:
       - "8090"
     networks:
@@ -71,7 +71,7 @@ services:
       - kafka
       - db
   processing:
-    image: churu/processing:latest
+    image: churu/processing
     ports:
       - "8100"
     networks:
@@ -85,7 +85,7 @@ services:
     depends_on:
       - storage
   audit_log:
-    image: churu/audit_log:latest
+    image: churu/audit_log
     ports:
       - "8110"
     networks:
