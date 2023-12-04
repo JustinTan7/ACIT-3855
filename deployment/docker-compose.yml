@@ -85,7 +85,7 @@ services:
     depends_on:
       - storage
   audit_log:
-    image: churu/audit_log:auditapp
+    image: churu/audit:auditapp
     ports:
       - "8110"
     networks:
