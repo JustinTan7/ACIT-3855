@@ -98,7 +98,7 @@ services:
     depends_on:
       - kafka
   dashboard:
-    image: dashboard
+    image: churu/dashboard
     ports:
       - "3000"
     networks:
@@ -107,7 +107,7 @@ services:
       - "processing"
       - "audit_log"
   health_check:
-    image: health_check
+    image: churu/health_check
     ports:
       - "8120"
     networks:
