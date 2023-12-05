@@ -49,23 +49,20 @@ def health_check():
         try:
             response = requests.get(f'http://sbajustin.eastus.cloudapp.azure.com/{service}{health_check_endpoint}', timeout=timeout)
             if response.status_code == 200:
+                logger.info(f"{service} service status updated: Successful")
                 status_data[service] = 'Running'
             else:
                 status_data[service] = 'Down'
         except requests.RequestException:
             status_data[service] = 'Down'
-        logger.info(f"{service} service status updated: {status_data[service]}")
+            logger.info("Failed")
 
     # Update the last_update timestamp after checking all services
     status_data['last_updated'] = datetime.now().strftime('%Y-%m-%dT%H:%M:%S')
 
     save_to_json(status_data, "health_check_data.json")
 
-    # Construct the response in the required format
-    response_data = {
-        service.lower(): status_data[service]
-        for service, status in status_data.items() if service != 'last_updated'
-    }
+    response_data = status_data
     response_data['last_updated'] = status_data['last_updated']
 
     logger.info(f"Returning data: {response_data}")

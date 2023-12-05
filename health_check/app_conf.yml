@@ -4,4 +4,4 @@ datastore:
 scheduler:
   period_sec: 20
 eventstore1:
-  url: http://sbajustin.eastus.cloudapp.azure.com:8120/health
+  url: http://sbajustin.eastus.cloudapp.azure.com
