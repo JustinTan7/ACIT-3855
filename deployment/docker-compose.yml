@@ -112,6 +112,11 @@ services:
       - "8120"
     networks:
       - "api.network"
+    depends_on:
+      - "receiver"
+      - "storage"
+      - "processing"
+      - "audit_log"
     environment:
       - TARGET_ENV=test
     volumes:
