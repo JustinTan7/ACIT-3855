@@ -30,16 +30,16 @@ logger = logging.getLogger('basicLogger')
 logger.info("App Conf File: %s" % app_conf_file)
 logger.info("Log Conf File: %s" % log_conf_file)
 
-services = ['Receiver', 'Storage', 'Processing', 'Audit']
+services = ['receiver', 'storage', 'processing', 'audit']
 health_check_endpoint = '/health'
 timeout = 5
 port = 8120
 
 status_data = {
-    'Receiver': 'Unknown',
-    'Storage': 'Unknown',
-    'Processing': 'Unknown',
-    'Audit': 'Unknown',
+    'receiver': 'Unknown',
+    'storage': 'Unknown',
+    'processing': 'Unknown',
+    'audit': 'Unknown',
     'last_updated': ""
 }
 
