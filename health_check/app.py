@@ -62,12 +62,9 @@ def health_check():
 
     save_to_json(status_data, "health_check_data.json")
 
-    response_data = status_data
-    response_data['last_updated'] = status_data['last_updated']
+    logger.info(f"Returning data: {status_data}")
 
-    logger.info(f"Returning data: {response_data}")
-
-    return response_data, 200
+    return status_data, 200
 
 def save_to_json(data, filename):
     with open(filename, 'w') as json_file:
