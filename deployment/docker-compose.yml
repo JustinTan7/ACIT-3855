@@ -117,6 +117,7 @@ services:
     volumes:
       - /home/azureuser/config/health_check:/config
       - /home/azureuser/logs:/logs
+      - health-db:/data
   nginx:
     image: nginx:latest
     volumes:
@@ -134,6 +135,7 @@ services:
 volumes:
   my-db:
   processing-db:
-
+  health-db:
+  
 networks:
   api.network:
