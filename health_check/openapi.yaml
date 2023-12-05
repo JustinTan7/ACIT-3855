@@ -19,7 +19,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/health_check'
+                type: object
+                items:
+                  $ref: '#/components/schemas/health_check'
   
 components:
   schemas:
