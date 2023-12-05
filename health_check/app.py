@@ -49,10 +49,11 @@ def health_check():
         try:
             response = requests.get(f'http://sbajustin.eastus.cloudapp.azure.com/{service}{health_check_endpoint}', timeout=timeout)
             if response.status_code == 200:
-                logger.info(f"{service} service status updated: Successful")
+                logger.info(f"{service} service status updated: Successful.")
                 status_data[service] = 'Running'
             else:
                 status_data[service] = 'Down'
+                logger.info(f"Service {service} is Down.")
         except requests.RequestException:
             status_data[service] = 'Down'
             logger.info("Failed")
